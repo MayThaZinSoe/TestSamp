@@ -24,10 +24,12 @@ public GameView(Context context){
 	
 	//making object of resource
 	Resources res = this.getContext().getResources();
-	player = BitmapFactory.decodeResource(res,R.drawable.apple);
-	
 	bgImage = BitmapFactory.decodeResource(res, R.drawable.img_mainvisual);
-}
+
+	
+	player = BitmapFactory.decodeResource(res,R.drawable.apple);
+}	
+	
 
 @SuppressLint("DrawAllocarion")
 
@@ -42,9 +44,9 @@ public void onDraw(Canvas canvas){
 public void playScene(Canvas canvas){
 	playerX = canvasCX - player.getWidth()/2;
 	playerY = canvasCY - player.getHeight()/2;
-	canvas.drawBitmap(player, playerX, playerY,null);
-	canvas.drawBitmap(bgImage,0,0,null);
 	
+	canvas.drawBitmap(bgImage,0,0,null);
+	canvas.drawBitmap(player, playerX, playerY,null);
 }
 
 
