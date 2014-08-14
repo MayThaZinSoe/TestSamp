@@ -18,6 +18,13 @@ public class GameView extends View{
 	private int canvasCX;
 	private int canvasCY;
 	private Bitmap bgImage;
+	
+	private Bitmap dora;
+	private int doraX = 0;
+	private int doraY = 0;
+	private int doraVX = -2;
+	
+	
 	private int frameIndex = 0;
 	
 //constructor
@@ -26,14 +33,15 @@ public GameView(Context context){
 	
 	//making object of resource
 	Resources res = this.getContext().getResources();
-	bgImage = BitmapFactory.decodeResource(res, R.drawable.img_mainvisual);
+	bgImage = BitmapFactory.decodeResource(res, R.drawable.image003);
+	dora = BitmapFactory.decodeResource(res,R.drawable.dora);
 
 	
 	player[0] = BitmapFactory.decodeResource(res,R.drawable.grape);
-	player[1] = BitmapFactory.decodeResource(res,R.drawable.grape);
-	player[2] = BitmapFactory.decodeResource(res,R.drawable.grape);
-	player[3] = BitmapFactory.decodeResource(res,R.drawable.grape);
-	player[4] = BitmapFactory.decodeResource(res,R.drawable.grape);
+	player[1] = BitmapFactory.decodeResource(res,R.drawable.grape1);
+	player[2] = BitmapFactory.decodeResource(res,R.drawable.grape2);
+	player[3] = BitmapFactory.decodeResource(res,R.drawable.grape3);
+	player[4] = BitmapFactory.decodeResource(res,R.drawable.grape4);
 }	
 	
 
@@ -52,6 +60,15 @@ public void onDraw(Canvas canvas){
 public void playScene(Canvas canvas){
 	
 	canvas.drawBitmap(bgImage,0,0,null);
+	
+	doraX += doraVX;
+	if(doraX < -dora.getWidth()){
+		doraX = canvas.getWidth();
+		doraY = (int)Math.floor(Math.random()*canvasCY);
+	}
+	
+	canvas.drawBitmap(dora,doraX,doraY,null);
+	
 	
 	playerX = canvasCX - player[0].getWidth()/2;
 	playerY = canvasCY - player[0].getHeight()/2;
