@@ -11,14 +11,16 @@ import android.graphics.BitmapFactory;
 
 
 public class GameView extends View{
-	private Bitmap player;
+	private Bitmap[] player = new Bitmap[5];
+	
 	private int playerX;
 	private int playerY;
 	private int canvasCX;
 	private int canvasCY;
 	private Bitmap bgImage;
+	private int frameIndex = 0;
 	
-
+//constructor
 public GameView(Context context){
 	super(context);
 	
@@ -27,7 +29,11 @@ public GameView(Context context){
 	bgImage = BitmapFactory.decodeResource(res, R.drawable.img_mainvisual);
 
 	
-	player = BitmapFactory.decodeResource(res,R.drawable.apple);
+	player[0] = BitmapFactory.decodeResource(res,R.drawable.grape);
+	player[1] = BitmapFactory.decodeResource(res,R.drawable.grape);
+	player[2] = BitmapFactory.decodeResource(res,R.drawable.grape);
+	player[3] = BitmapFactory.decodeResource(res,R.drawable.grape);
+	player[4] = BitmapFactory.decodeResource(res,R.drawable.grape);
 }	
 	
 
@@ -41,12 +47,16 @@ public void onDraw(Canvas canvas){
 	
 	playScene(canvas);
 }
+
+//mesoto
 public void playScene(Canvas canvas){
-	playerX = canvasCX - player.getWidth()/2;
-	playerY = canvasCY - player.getHeight()/2;
 	
 	canvas.drawBitmap(bgImage,0,0,null);
-	canvas.drawBitmap(player, playerX, playerY,null);
+	
+	playerX = canvasCX - player[0].getWidth()/2;
+	playerY = canvasCY - player[0].getHeight()/2;
+	if(frameIndex > 4) frameIndex = 0;
+	canvas.drawBitmap(player[frameIndex++], playerX, playerY,null);
 }
 
 
