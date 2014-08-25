@@ -85,7 +85,7 @@ public void playScene(Canvas canvas){
 	
 	//circle
 	energyX += energyVX;
-	if(energyX < 0){
+	if(energyX < 0 || hitCheck()){
 		energyX = canvas.getWidth() + 20;
 		energyY = (int)Math.floor(Math.random()* canvasCY);
 		
@@ -112,7 +112,17 @@ public boolean onTouchEvent(MotionEvent me){
 	return true;
 }
 
-
+public boolean hitCheck(){
+	if(playerX < energyX && 
+			(playerX + player[0].getWidth()) > energyX &&
+			playerY < energyY &&
+			(playerY + player[0].getHeight()) > energyY){
+		return true;
+	}else{
+		return false;
+		
+	}
+	}
 
 
 }
