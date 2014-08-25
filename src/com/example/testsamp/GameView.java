@@ -47,7 +47,7 @@ public GameView(Context context){
 	
 	//making object of resource
 	Resources res = this.getContext().getResources();
-	bgImage = BitmapFactory.decodeResource(res, R.drawable.image003);
+	bgImage = BitmapFactory.decodeResource(res, R.drawable.p2);
 	dora = BitmapFactory.decodeResource(res,R.drawable.dora);
 
 	
@@ -58,11 +58,11 @@ public GameView(Context context){
 	player[4] = BitmapFactory.decodeResource(res,R.drawable.grape4);
 	
 	//circle colour
-	energyPaint.setColor(Color.WHITE);
+	energyPaint.setColor(Color.GREEN);
 	energyPaint.setAntiAlias(true);
 	
 	//for score.. setting color
-	scorePaint.setColor(Color.YELLOW);
+	scorePaint.setColor(Color.BLACK);
 	//score text size
 	scorePaint.setTextSize(32);
 	scorePaint.setAntiAlias(true);
