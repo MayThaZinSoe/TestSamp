@@ -60,6 +60,7 @@ private long remainedTime;
 
 Paint timePaint = new Paint();
 Paint titlePaint = new Paint();
+
 	
 	
 //constructor
@@ -104,6 +105,10 @@ public GameView(Context context){
 	timePaint.setTextSize(32);
 	timePaint.setAntiAlias(true);
 	gameState = GAME_START;
+	
+	//game sound
+	Sounds.init(context);
+	
 	
 }	
 	
@@ -168,7 +173,7 @@ public void overScene(Canvas canvas){
 			titlePaint.setTextAlign(Align.CENTER);
 			canvas.drawText("Time up", canvasCX, canvasCY - 200, titlePaint);
 			
-			titlePaint.setColor(Color.GREEN);
+			titlePaint.setColor(Color.BLACK);
 			titlePaint.setTextSize(64);
 			titlePaint.setTextAlign(Align.CENTER);
 			canvas.drawText("Your score: " + score, canvasCX, canvasCY + 200,titlePaint);
@@ -181,6 +186,7 @@ public void playScene(Canvas canvas){
 	//play time
 	remainedTime = TIME - (System.currentTimeMillis() - gameStarted) / 1000;
 	if(remainedTime < 0){
+		Sounds.stopBGM();
 		gameState = GAME_OVER;
 		return;
 	}
@@ -221,7 +227,7 @@ public void playScene(Canvas canvas){
 	canvas.drawText(scoreLabel + score,10, 50,scorePaint);
 	
 	//last time
-	canvas.drawText( remainedTime +"sec"+  "left",10,100, timePaint);
+	canvas.drawText( remainedTime +"sec "+  "LEFT",10,100, timePaint);
 	
 }
 
@@ -237,10 +243,12 @@ public boolean onTouchEvent(MotionEvent me){
 		case GAME_START:
 			if(buttonOn(startButton,x,y)){
 				gameState = GAME_PLAY;
+				Sounds.playBGM();
 				gameStarted = System.currentTimeMillis();
 		}
 		break;
 		case GAME_PLAY:
+			
 			playerVY = -20;
 		break;
 		case GAME_OVER:
@@ -273,6 +281,8 @@ public boolean hitCheck(){
 			(playerY + player[0].getHeight()) > energyY){
 		
 		score  +=  10;
+		//repeat sound
+		Sounds.playSE();
 		return true;
 	}else{
 		return false;
@@ -280,6 +290,9 @@ public boolean hitCheck(){
 	}
 	}
 
+public int getGameState(){
+	return gameState;
+}
 
 }
 

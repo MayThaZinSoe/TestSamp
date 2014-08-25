@@ -42,6 +42,19 @@ public class MainActivity extends Activity {
 		},0,MSEC);
 	
 	}
+	@Override
+	protected void onResume(){
+		super.onResume();
+		//getting condi of game
+		int state = ((GameView) view).getGameState();
+		//repeat when playing
+		if(state == 1)Sounds.playBGM();
+	}
+	@Override
+	protected void onPause(){
+		super.onPause();
+		Sounds.stopBGM();
+	}
         
        
     }
