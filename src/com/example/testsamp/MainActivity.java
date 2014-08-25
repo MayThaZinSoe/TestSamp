@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
 	
 	//setting handler
 	private Handler handler = new Handler();
-	private final static long MSEC = 30;
+	private final static long MSEC = 60;
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,4 @@ public class MainActivity extends Activity {
         
        
     }
-
-
 

@@ -1,5 +1,6 @@
 package com.example.testsamp;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,6 +9,8 @@ import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 
 public class GameView extends View{
@@ -16,16 +19,23 @@ public class GameView extends View{
 	private int playerX;
 	private int playerY;
 	private int canvasCX;
+	
 	private int canvasCY;
 	private Bitmap bgImage;
-	
+	private int playerVY;
 	private Bitmap dora;
 	private int doraX = 0;
 	private int doraY = 0;
 	private int doraVX = -2;
 	
-	
+	//setting for circle
+	private int energyX;
+	private int energyY;
+	private int energyVX = -20;
+	Paint energyPaint = new Paint();
 	private int frameIndex = 0;
+	
+	
 	
 //constructor
 public GameView(Context context){
@@ -42,6 +52,10 @@ public GameView(Context context){
 	player[2] = BitmapFactory.decodeResource(res,R.drawable.grape2);
 	player[3] = BitmapFactory.decodeResource(res,R.drawable.grape3);
 	player[4] = BitmapFactory.decodeResource(res,R.drawable.grape4);
+	
+	//circle colour
+	energyPaint.setColor(Color.WHITE);
+	energyPaint.setAntiAlias(true);
 }	
 	
 
@@ -69,11 +83,33 @@ public void playScene(Canvas canvas){
 	
 	canvas.drawBitmap(dora,doraX,doraY,null);
 	
+	//circle
+	energyX += energyVX;
+	if(energyX < 0){
+		energyX = canvas.getWidth() + 20;
+		energyY = (int)Math.floor(Math.random()* canvasCY);
+		
+	}
+	canvas.drawCircle(energyX,energyY, 10,energyPaint);
+	
 	
 	playerX = canvasCX - player[0].getWidth()/2;
-	playerY = canvasCY - player[0].getHeight()/2;
+	
+	//playerY = canvasCY - player[0].getHeight()/2;
+	
+	playerY += playerVY;
+	if(playerY < 0) playerY = 0;
+	playerVY += 4;
+	if(playerY > canvasCY) playerY = canvasCY;
+	
 	if(frameIndex > 4) frameIndex = 0;
 	canvas.drawBitmap(player[frameIndex++], playerX, playerY,null);
+}
+public boolean onTouchEvent(MotionEvent me){
+	if(me.getAction() == MotionEvent.ACTION_DOWN){
+		playerVY = -20;
+	}
+	return true;
 }
 
 
