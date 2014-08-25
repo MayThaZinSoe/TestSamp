@@ -53,7 +53,12 @@ public final static int GAME_PLAY = 1;
 public final static int GAME_OVER = 2;
 private int gameState;
 
+//play time
+private final static long TIME = 60;
+private long gameStarted;
+private long remainedTime;
 
+Paint timePaint = new Paint();
 Paint titlePaint = new Paint();
 	
 	
@@ -92,6 +97,12 @@ public GameView(Context context){
 	retryImage = BitmapFactory.decodeResource(res, R.drawable.s1);
 	retryButton = BitmapFactory.decodeResource(res,R.drawable.retry);
 	
+	gameState = GAME_START;
+	
+	//setting play time
+	timePaint.setColor(Color.RED);
+	timePaint.setTextSize(32);
+	timePaint.setAntiAlias(true);
 	gameState = GAME_START;
 	
 }	
@@ -134,7 +145,7 @@ public void startScene(Canvas canvas){
 			
 			titlePaint.setAntiAlias(true);
 			titlePaint.setColor(Color.RED);
-			titlePaint.setTextSize(66);
+			titlePaint.setTextSize(56);
 			titlePaint.setTextAlign(Align.RIGHT);
 			canvas.drawText("HaPPy TouCH", canvasCY, canvasCY - 200, titlePaint);
 			canvas.drawBitmap(startButton, 
@@ -164,8 +175,15 @@ public void overScene(Canvas canvas){
 			
 }
 
-//mesoto
+//mensoto
 public void playScene(Canvas canvas){
+	
+	//play time
+	remainedTime = TIME - (System.currentTimeMillis() - gameStarted) / 1000;
+	if(remainedTime < 0){
+		gameState = GAME_OVER;
+		return;
+	}
 	
 	canvas.drawBitmap(bgImage,0,0,null);
 	
@@ -202,6 +220,9 @@ public void playScene(Canvas canvas){
 	//score
 	canvas.drawText(scoreLabel + score,10, 50,scorePaint);
 	
+	//last time
+	canvas.drawText( remainedTime +"sec"+  "left",10,100, timePaint);
+	
 }
 
 
@@ -211,11 +232,12 @@ public boolean onTouchEvent(MotionEvent me){
 	int y = (int)me.getY();
 	
 	if(me.getAction() == MotionEvent.ACTION_DOWN){
-		//geeting info of condition of the game
+		//getting info of condition of the game
 		switch (gameState){
 		case GAME_START:
 			if(buttonOn(startButton,x,y)){
 				gameState = GAME_PLAY;
+				gameStarted = System.currentTimeMillis();
 		}
 		break;
 		case GAME_PLAY:
