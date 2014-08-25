@@ -35,6 +35,10 @@ public class GameView extends View{
 	Paint energyPaint = new Paint();
 	private int frameIndex = 0;
 	
+	// for score
+private final String scoreLabel = "SCORE: ";
+private int score;
+Paint scorePaint = new Paint();
 	
 	
 //constructor
@@ -56,6 +60,14 @@ public GameView(Context context){
 	//circle colour
 	energyPaint.setColor(Color.WHITE);
 	energyPaint.setAntiAlias(true);
+	
+	//for score.. setting color
+	scorePaint.setColor(Color.YELLOW);
+	//score text size
+	scorePaint.setTextSize(32);
+	scorePaint.setAntiAlias(true);
+	
+	
 }	
 	
 
@@ -104,7 +116,13 @@ public void playScene(Canvas canvas){
 	
 	if(frameIndex > 4) frameIndex = 0;
 	canvas.drawBitmap(player[frameIndex++], playerX, playerY,null);
+	
+	//score
+	canvas.drawText(scoreLabel + score,10, 50,scorePaint);
+	
 }
+
+
 public boolean onTouchEvent(MotionEvent me){
 	if(me.getAction() == MotionEvent.ACTION_DOWN){
 		playerVY = -20;
@@ -117,6 +135,8 @@ public boolean hitCheck(){
 			(playerX + player[0].getWidth()) > energyX &&
 			playerY < energyY &&
 			(playerY + player[0].getHeight()) > energyY){
+		
+		score  +=  10;
 		return true;
 	}else{
 		return false;
@@ -126,3 +146,5 @@ public boolean hitCheck(){
 
 
 }
+
+
